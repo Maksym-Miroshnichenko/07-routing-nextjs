@@ -9,6 +9,7 @@ export interface SearchResponse {
 type FetchParams = {
   query: string;
   page: number;
+  tag?: string;
 };
 
 const instance = axios.create({
@@ -20,7 +21,7 @@ const instance = axios.create({
 });
 
 export async function fetchNotes(params: FetchParams): Promise<SearchResponse> {
-  const { query, page } = params;
+  const { query, page, tag } = params;
 
   const response = await instance.get<SearchResponse>("", {
     params: {
@@ -28,6 +29,7 @@ export async function fetchNotes(params: FetchParams): Promise<SearchResponse> {
       page,
       perPage: 12,
       sortBy: "created",
+      tag,
     },
   });
 
